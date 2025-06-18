@@ -322,8 +322,10 @@ if race_choice:
     fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig4)
 
+    df_course = df[["gps_lat", "gps_lon"]]
+    df_course.columns = ["latitude", "longitude"]
     st.map(
-        df[["gps_lat", "gps_lon"]]
+        df_course
     )
 
 
