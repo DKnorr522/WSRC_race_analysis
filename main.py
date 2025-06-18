@@ -9,7 +9,7 @@ from math import ceil, floor
 
 def fetchSheetNames(file_name: str) -> list[str]:
     try:
-        sheet_names: list[str] = pd.ExcelFile(f'../{file_name}').sheet_names
+        sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
     except FileNotFoundError as err:
         print(f"File not found: {err}")
         sheet_names = []
@@ -19,7 +19,7 @@ def fetchSheetNames(file_name: str) -> list[str]:
 def loadDataFrame(file_name: str, event_name: str = "Men's 8+") -> pd.DataFrame:
     try:
         df: pd.DataFrmae = pd.read_excel(
-            f"../{file_name}",
+            f"/{file_name}",
             sheet_name=event_name
         )
     except FileNotFoundError as err:
