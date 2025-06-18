@@ -10,8 +10,8 @@ import os
 
 def fetchSheetNames(file_name: str) -> list[str]:
     try:
-        sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
-        # sheet_names: list[str] = openpyxl.load_workbook(file_name).sheetnames
+        # sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
+        sheet_names: list[str] = openpyxl.load_workbook(file_name).sheetnames
     except FileNotFoundError as err:
         print(f"File not found: {err}")
         sheet_names = []
