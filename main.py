@@ -323,10 +323,7 @@ if race_choice:
     st.plotly_chart(fig4)
 
     st.map(
-        df,
-        latitude=df.gps_lat,
-        longitude=df.gps_lon,
-        use_container_width=True
+        df[["gps_lat", "gps_lon"]]
     )
 
 
