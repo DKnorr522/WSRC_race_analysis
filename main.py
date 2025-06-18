@@ -327,7 +327,7 @@ if race_choice:
     st.map(
         df_course,
         size=1,
-        zoom=13
+        zoom=14
     )
 
 
