@@ -9,29 +9,23 @@ import os
 import openpyxl
 
 
-def fetchSheetNames(file_name: str) -> list[str]:
+def fetchExcelFile(file_name: str):
     try:
-        # sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
-        sheet_names: list[str] = openpyxl.load_workbook(file_name).sheetnames
+        wb = openpyxl.load_workbook(file_name)
     except FileNotFoundError as err:
         print(f"File not found: {err}")
-        sheet_names = []
+        wb = None
+    except InvalidFileException as err:
+        print(f"File must be .xlsx: {err}")
     
-    return sheet_names
+    return wb
 
-def loadDataFrame(file_name: str, event_name: str = "Men's 8+") -> pd.DataFrame:
+def loadDataFrame(wb, event_name: str) -> pd.DataFrame:
     try:
-        df: pd.DataFrmae = pd.read_excel(
-            f"/{file_name}",
-            sheet_name=event_name
-        )
-    except FileNotFoundError as err:
-        print(f"File not found: {err}")
+        df: pd.DataFrame = pd.DataFrame(wb[event_name].values)
+    except KeyError as err:
+        print(f"Invalid worksheet name: {err}")
         df = None
-    except ValueError as err:
-        print(f"No sheet named {event_name}: {err}")
-        df = None
-
     return df
 
 def cleanDataFrame(df: pd.DataFrame) -> pd.DataFrame:
@@ -293,7 +287,8 @@ st.divider()
 col_race, col_breakdown = st.columns(2)
 
 with col_race:
-    race_choices = fetchSheetNames(file_name)
+    wb = fetchExcelFile(file_name)
+    race_choices = wb.sheetnames
     race_choice = st.selectbox(
         "Choose a race",
         options=race_choices,
@@ -311,7 +306,7 @@ with col_breakdown:
     strokes_to_ignore = 0 if show_start else 5
 
 if race_choice:
-    df = loadDataFrame(file_name, race_choice)
+    df = loadDataFrame(wb, race_choice)
     df = cleanDataFrame(df)
     fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore=strokes_to_ignore, breakdown=breakdown)
     st.plotly_chart(fig1)
