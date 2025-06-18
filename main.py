@@ -6,6 +6,7 @@ from plotly import express as px, graph_objects as go, figure_factory as ff
 from plotly.subplots import make_subplots
 from math import ceil, floor
 import os
+import openpyxl
 
 
 def fetchSheetNames(file_name: str) -> list[str]:
