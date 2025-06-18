@@ -326,7 +326,7 @@ if race_choice:
     df_course.columns = ["latitude", "longitude"]
     st.map(
         df_course,
-        size=10
+        size=1
     )
 
 
