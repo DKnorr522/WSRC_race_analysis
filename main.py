@@ -5,11 +5,14 @@ import seaborn as sns
 from plotly import express as px, graph_objects as go, figure_factory as ff
 from plotly.subplots import make_subplots
 from math import ceil, floor
+import os
+import openpyxl
 
 
 def fetchSheetNames(file_name: str) -> list[str]:
     try:
-        sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
+        # sheet_names: list[str] = pd.ExcelFile(f'/{file_name}').sheet_names
+        sheet_names: list[str] = openpyxl.load_workbook(file_name).sheetnames
     except FileNotFoundError as err:
         print(f"File not found: {err}")
         sheet_names = []
