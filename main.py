@@ -325,7 +325,8 @@ if race_choice:
     df_course = df[["gps_lat", "gps_lon"]]
     df_course.columns = ["latitude", "longitude"]
     st.map(
-        df_course
+        df_course,
+        size=10
     )
 
 
