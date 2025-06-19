@@ -217,7 +217,6 @@ def createLinePlotSpeedColoredStrokeRate(
             "total_strokes": "Stroke Count"
         },
         # color_continuous_scale='aggrnyl',
-        color_continuous_scale=colors.sequential.Viridis
         # color_continuous_scale=[
         #     [20, 'blue'],
         #     [30, 'yellow'],
@@ -227,6 +226,7 @@ def createLinePlotSpeedColoredStrokeRate(
         # ],
         # # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
+    st.write(df_func.dtypes)
 
     fig.update_xaxes(range=[0, 1000])
     return fig
