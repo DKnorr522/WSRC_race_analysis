@@ -54,7 +54,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     numeric_cols = [
         'interval',
         'distance_gps',
-        'distnace_imp',
+        'distance_imp',
         'speed_gps',
         'speed_imp',
         'stroke_rate',
