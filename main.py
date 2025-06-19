@@ -48,6 +48,31 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
         for col in df_func.columns
     ]
 
+    numeric_cols = [
+        'interval',
+        'distance_gps',
+        'distnace_imp',
+        'speed_gps',
+        'speed_imp',
+        'stroke_rate',
+        'total_strokes',
+        'distance_per_stroke_gps',
+        'distance_per_stroke_imp',
+        'heart_rate',
+        'power',
+        'catch',
+        'slip',
+        'finish',
+        'wash',
+        'force_avg',
+        'work',
+        'force_max',
+        'max_force_angle'
+        'gps_lat',
+        'gps_lon'
+    ]
+    df_func[numeric_cols] = df[numeric_cols].apply(pd.to_numeric)
+
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
     )
@@ -226,7 +251,6 @@ def createLinePlotSpeedColoredStrokeRate(
         # ],
         # # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
-    st.write(df_func.dtypes)
 
     fig.update_xaxes(range=[0, 1000])
     return fig
