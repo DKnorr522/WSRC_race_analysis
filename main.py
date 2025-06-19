@@ -48,9 +48,6 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
         for col in df_func.columns
     ]
 
-    st.dataframe(df_func)
-    st.write(df_func.dtypes)
-
     numeric_cols = [
         'interval',
         'distance_gps',
@@ -244,7 +241,7 @@ def createLinePlotSpeedColoredStrokeRate(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        # color_continuous_scale='aggrnyl',
+        color_continuous_scale='aggrnyl',
         # color_continuous_scale=[
         #     [20, 'blue'],
         #     [30, 'yellow'],
