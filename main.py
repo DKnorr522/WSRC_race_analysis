@@ -323,18 +323,29 @@ with col_race:
         options=race_choices,
         index=None
     )
-with col_breakdown:
-    breakdown = st.checkbox(
-        "Breakdown",
-        value=False
-    )
-    show_start = st.checkbox(
-        "Show starting strokes",
-        value=False
-    )
-    strokes_to_ignore = 0 if show_start else 5
+# with col_breakdown:
+#     breakdown = st.checkbox(
+#         "Breakdown",
+#         value=False
+#     )
+#     show_start = st.checkbox(
+#         "Show starting strokes",
+#         value=False
+#     )
+#     strokes_to_ignore = 0 if show_start else 5
 
 if race_choice:
+    with col_breakdown:
+        breakdown = st.checkbox(
+            "Breakdown",
+            value=False
+        )
+        show_start = st.checkbox(
+            "Show starting strokes",
+            value=False
+        )
+        strokes_to_ignore = 0 if show_start else 5
+
     df = loadDataFrame(wb, race_choice)
     df = cleanDataFrame(df)
 
