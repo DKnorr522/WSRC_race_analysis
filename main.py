@@ -310,16 +310,16 @@ with col_breakdown:
 if race_choice:
     df = loadDataFrame(wb, race_choice)
     df = cleanDataFrame(df)
-    fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore=strokes_to_ignore, breakdown=breakdown)
+    fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore_temp=strokes_to_ignore, breakdown_temp=breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = createLinePlotSpeedColoredStrokeRate(df, strokes_to_ignore=strokes_to_ignore)
+    fig2 = createLinePlotSpeedColoredStrokeRate(df, strokes_to_ignore_temp=strokes_to_ignore)
     st.plotly_chart(fig2)
 
-    fig3 = createLinePlotStrokeRateColoredSpeed(df, strokes_to_ignore=strokes_to_ignore)
+    fig3 = createLinePlotStrokeRateColoredSpeed(df, strokes_to_ignore_temp=strokes_to_ignore)
     st.plotly_chart(fig3)
 
-    fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore=strokes_to_ignore)
+    fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore_temp=strokes_to_ignore)
     st.plotly_chart(fig4)
 
     df_course = df[["gps_lat", "gps_lon"]]
