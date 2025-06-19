@@ -56,7 +56,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     return df_func
 
 def createLinePlotSpeedStrokeRate(
-        df_func_func_func: pd.DataFrame,
+        df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5,
         breakdown_func: bool = False):# -> go._figure.Figure:
     """
@@ -67,12 +67,12 @@ def createLinePlotSpeedStrokeRate(
     """
 
     if strokes_to_ignore_func > 0:
-        df_func_func_func = df_func_func_func.loc[df_func_func_func.total_strokes > strokes_to_ignore_func, :]
+        df_func = df_func.loc[df_func.total_strokes > strokes_to_ignore_func, :]
 
     all_figs = make_subplots(specs=[[{"secondary_y": True}]])
 
     fig1_func = px.line(
-        df_func_func_func,
+        df_func,
         x="distance_gps",
         y="speed_gps",
         hover_data=["split_gps", "elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
