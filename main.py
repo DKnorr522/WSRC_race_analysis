@@ -244,15 +244,7 @@ def createLinePlotStrokeRateColoredSpeed(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        # color_continuous_scale='aggrnyl',
-        marker_colorscale=px.colors.continuous.aggrnyl,
-        # color_continuous_scale=[
-        #     [20, 'blue'],
-        #     [30, 'yellow'],
-        #     [35, ' orange'],
-        #     [40, 'red'],
-        #     [50, 'black']
-        # ],
+        color_continuous_scale='aggrnyl',
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
         # width=1600,
         # height=800
