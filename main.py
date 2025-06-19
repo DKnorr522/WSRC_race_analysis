@@ -121,14 +121,7 @@ def createLinePlotSpeedStrokeRate(
         x="distance_gps",
         y="stroke_rate",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
-        labels={
-            "speed_gps": "Speed (m/s)",
-            "distance_gps": "Distance (m)",
-            "stroke_rate": "Stroke Rate",
-            "elapsed_time": "Time",
-            "distance_per_stroke_gps": "Meters per Stroke",
-            "total_strokes": "Stroke Count"
-        },
+        labels=labels_dict,
     )
     fig2_func.update_traces({'name': "Stroke Rate"}, yaxis="y2")
 
@@ -230,15 +223,14 @@ def createLinePlotSpeedColoredStrokeRate(
         y="speed_gps",
         color="stroke_rate",
         # color="distance_per_stroke_gps",
-        hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
-        labels={
-            "speed_gps": "Speed (m/s)",
-            "distance_gps": "Distance (m)",
-            "stroke_rate": "Stroke Rate",
-            "elapsed_time": "Time",
-            "distance_per_stroke_gps": "Meters per Stroke",
-            "total_strokes": "Stroke Count"
-        },
+        hover_data=[
+            "split_gps",
+            "elapsed_time",
+            "stroke_rate",
+            "distance_per_stroke_gps",
+            "total_strokes"
+        ],
+        labels=labels_dict,
         color_continuous_scale='aggrnyl',
     )
 
@@ -257,14 +249,7 @@ def createLinePlotStrokeRateColoredSpeed(
         y="stroke_rate",
         color="speed_gps",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
-        labels={
-            "speed_gps": "Speed (m/s)",
-            "distance_gps": "Distance (m)",
-            "stroke_rate": "Stroke Rate",
-            "elapsed_time": "Time",
-            "distance_per_stroke_gps": "Meters per Stroke",
-            "total_strokes": "Stroke Count"
-        },
+        labels=labels_dict,
         color_continuous_scale='aggrnyl',
     )
 
@@ -281,14 +266,7 @@ def createBoxPlotStrokeRateSpeed(
         df_func,
         x="stroke_rate",
         y="speed_gps",
-        labels={
-            "speed_gps": "Speed (m/s)",
-            "distance_gps": "Distance (m)",
-            "stroke_rate": "Stroke Rate",
-            "elapsed_time": "Time",
-            "distance_per_stroke_gps": "Meters per Stroke",
-            "total_strokes": "Stroke Count"
-        },
+        labels=labels_dict,
     )
 
     return fig
@@ -312,6 +290,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.divider()
+
+labels_dict = {
+    "speed_gps": "Speed (m/s)",
+    "split_gps": "Split",
+    "distance_gps": "Distance (m)",
+    "stroke_rate": "Stroke Rate",
+    "elapsed_time": "Time",
+    "distance_per_stroke_gps": "Meters per Stroke",
+    "total_strokes": "Stroke Count"
+}
 
 col_race, col_breakdown = st.columns(2)
 
