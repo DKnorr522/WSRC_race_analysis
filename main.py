@@ -269,16 +269,15 @@ def createBoxPlotStrokeRateSpeed(
 
     return fig
 
-def createCourseMap(df: pd.DataFrame, size: float = 0.1, zoom: int= 14):
-    df_course: pd.DataFrame = df[["gps_lat", "gps_lon"]]
-    df_course.columns = ["latitude", "longitude"]
-
-    course_map = st.map(
-        df_course,
+def plotCourseMap(df: pd.DataFrame, size: float=0.1, zoom: int=14) -> None:
+    st.map(
+        df,
+        latitude="gps_lat",
+        longitude="gps_lon",
         size=size,
         zoom=zoom
     )
-    return course_map
+    return
 
 
 file_name = "2025 Biernacki.xlsx"
@@ -325,7 +324,5 @@ if race_choice:
     fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig4)
 
-    course_map = createCourseMap(df, 0.1, 14)
-    st.map(course_map)
-
+    plotCourseMap(df, 0.1, 14)
 
