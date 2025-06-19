@@ -17,6 +17,7 @@ def fetchExcelFile(file_name_func: str):
         wb_func = None
     except InvalidFileException as err:
         print(f"File must be .xlsx: {err}")
+        wb_func = None
     
     return wb_func
 
