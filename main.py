@@ -70,7 +70,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
         'force_avg',
         'work',
         'force_max',
-        'max_force_angle'
+        'max_force_angle',
         'gps_lat',
         'gps_lon'
     ]
