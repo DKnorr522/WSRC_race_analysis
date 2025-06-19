@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
-from plotly import express as px, graph_objects as go, figure_factory as ff
+from plotly import express as px, graph_objects as go, figure_factory as ff, colors
 from plotly.subplots import make_subplots
 from math import ceil, floor
 import os
@@ -216,7 +216,8 @@ def createLinePlotSpeedColoredStrokeRate(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        color_continuous_scale='aggrnyl',
+        # color_continuous_scale='aggrnyl',
+        marker_colorscale=colors.sequential.Aggrynl
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
 
