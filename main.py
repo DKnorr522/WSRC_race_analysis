@@ -324,5 +324,5 @@ if race_choice:
     fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig4)
 
-    plotCourseMap(df, 0.1, 14)
+    plotCourseMap(df, 0.1, 15)
 
