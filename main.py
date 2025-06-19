@@ -314,6 +314,7 @@ with col_race:
     race_choices = wb.sheetnames
     race_choice = st.selectbox(
         # "Choose a race",
+        "",
         options=race_choices,
         index=None,
         placeholder="Choose a race"
