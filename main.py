@@ -197,7 +197,7 @@ def createLinePlotSpeedColoredStrokeRate(
         strokes_to_ignore: int = 5):
     if strokes_to_ignore > 0:
         df = df.loc[df.total_strokes > strokes_to_ignore, :]
-    df.stroke_rate.astype('float')
+    df.astype({'stroke_rate': 'float'})
     fig = px.scatter(
         df,
         x="distance_gps",
