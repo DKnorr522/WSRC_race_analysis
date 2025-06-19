@@ -313,22 +313,11 @@ with col_race:
     wb = fetchExcelFile(file_name)
     race_choices = wb.sheetnames
     race_choice = st.selectbox(
-        # "Choose a race",
         "",
         options=race_choices,
         index=None,
         placeholder="Choose a race"
     )
-# with col_breakdown:
-#     breakdown = st.checkbox(
-#         "Breakdown",
-#         value=False
-#     )
-#     show_start = st.checkbox(
-#         "Show starting strokes",
-#         value=False
-#     )
-#     strokes_to_ignore = 0 if show_start else 5
 
 if race_choice:
     with col_breakdown:
