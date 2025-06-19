@@ -326,6 +326,6 @@ if race_choice:
     st.plotly_chart(fig4)
 
     course_map = createCourseMap(df, 0.1, 14)
-    st.plotly_chart(course_map)
+    st.map(course_map)
 
 
