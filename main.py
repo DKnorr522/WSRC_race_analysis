@@ -315,7 +315,7 @@ if race_choice:
     fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore=strokes_to_ignore, breakdown=breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = createLinePlotSpeedColoredStrokeRate(df, strokes_to_ignore=strokes_to_ignore)
+    fig2 = createLinePlotSpeedColoredStrokeRate(df.copy(), strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig2)
 
     fig3 = createLinePlotStrokeRateColoredSpeed(df, strokes_to_ignore=strokes_to_ignore)
