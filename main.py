@@ -23,12 +23,12 @@ def fetchExcelFile(file_name_func: str):
 def loadDataFrame(wb_func, event_name_func: str) -> pd.DataFrame:
     try:
         df_func: pd.DataFrame = pd.DataFrame(wb_func[event_name_func].values)
-        df.columns = df.iloc[0]
-        df = df[1:].reset_index(drop=True)
+        df_func.columns = df_func.iloc[0]
+        df_func = df[1:].reset_index(drop=True)
     except KeyError as err:
         print(f"Invalid worksheet name: {err}")
-        df = None
-    return df
+        df_func = None
+    return df_func
 
 def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func.columns = [
