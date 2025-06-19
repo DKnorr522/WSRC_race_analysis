@@ -49,11 +49,11 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
     )
-    df["split_sec"] = df.split_gps.apply(
+    df_func["split_sec"] = df_func.split_gps.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
     )
 
-    return df
+    return df_func
 
 def createLinePlotSpeedStrokeRate(
         df_func_func_func: pd.DataFrame,
