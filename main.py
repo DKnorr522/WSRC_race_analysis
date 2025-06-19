@@ -217,7 +217,7 @@ def createLinePlotSpeedColoredStrokeRate(
             "total_strokes": "Stroke Count"
         },
         # color_continuous_scale='aggrnyl',
-        marker_colorscale=colors.sequential.Aggrynl
+        marker_colorscale=colors.sequential.Viridis
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
 
