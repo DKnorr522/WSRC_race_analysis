@@ -319,6 +319,7 @@ with col_breakdown:
 if race_choice:
     df = loadDataFrame(wb, race_choice)
     df = cleanDataFrame(df)
+
     fig1 = createLinePlotSpeedStrokeRate(df.copy(), strokes_to_ignore, breakdown)
     st.plotly_chart(fig1)
 
