@@ -197,19 +197,12 @@ def createLinePlotSpeedColoredStrokeRate(
         strokes_to_ignore: int = 5):
     if strokes_to_ignore > 0:
         df = df.loc[df.total_strokes > strokes_to_ignore, :]
+    df.stroke_rate.astype('float')
     fig = px.scatter(
         df,
         x="distance_gps",
         y="speed_gps",
         color="stroke_rate",
-        color_continuous_scale=[
-            (0, 'blue'),
-            (20, 'green'),
-            (30, 'yellow'),
-            (35, 'orange'),
-            (40, 'red'),
-            (50, 'black')
-        ],
         # color="distance_per_stroke_gps",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
         labels={
@@ -220,7 +213,7 @@ def createLinePlotSpeedColoredStrokeRate(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        # color_continuous_scale='aggrnyl',
+        color_continuous_scale='aggrnyl',
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
 
