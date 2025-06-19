@@ -202,6 +202,14 @@ def createLinePlotSpeedColoredStrokeRate(
         x="distance_gps",
         y="speed_gps",
         color="stroke_rate",
+        color_continuous_scale=[
+            (0, 'blue'),
+            (20, 'green'),
+            (30, 'yellow'),
+            (35, 'orange'),
+            (40, 'red'),
+            (50, 'black')
+        ],
         # color="distance_per_stroke_gps",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
         labels={
