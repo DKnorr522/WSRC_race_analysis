@@ -86,7 +86,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
 def createLinePlotSpeedStrokeRate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5,
-        breakdown_func: bool = False):# -> go._figure.Figure:
+        breakdown_func: bool = False):
     """
     Adapted secondary y-axis from:
     https://stackoverflow.com/questions/62853539/how-to-plot-on-secondary-y-axis-with-plotly-express
@@ -112,7 +112,6 @@ def createLinePlotSpeedStrokeRate(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
     fig1_func.update_traces({'name': "Speed"})
 
@@ -129,7 +128,6 @@ def createLinePlotSpeedStrokeRate(
             "distance_per_stroke_gps": "Meters per Stroke",
             "total_strokes": "Stroke Count"
         },
-        # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
     fig2_func.update_traces({'name': "Stroke Rate"}, yaxis="y2")
 
@@ -137,7 +135,6 @@ def createLinePlotSpeedStrokeRate(
     all_figs.layout.xaxis.title = "Distance (m)"
     all_figs.layout.yaxis.title = "Speed (m/s)"
     all_figs.layout.yaxis2.title = "Stroke Rate"
-    # all_figs.layout.title=f"{file_name.split('.')[0]}: WSRC {sheet_name}"
 
     all_figs.for_each_trace(lambda t: t.update(
         line=dict(color=t.marker.color),
@@ -242,14 +239,6 @@ def createLinePlotSpeedColoredStrokeRate(
             "total_strokes": "Stroke Count"
         },
         color_continuous_scale='aggrnyl',
-        # color_continuous_scale=[
-        #     [20, 'blue'],
-        #     [30, 'yellow'],
-        #     [35, ' orange'],
-        #     [40, 'red'],
-        #     [50, 'black']
-        # ],
-        # # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
 
     fig.update_xaxes(range=[0, 1000])
@@ -265,7 +254,6 @@ def createLinePlotStrokeRateColoredSpeed(
         df_func,
         x="distance_gps",
         y="stroke_rate",
-        # color="distance_per_stroke_gps",
         color="speed_gps",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
         labels={
@@ -277,9 +265,6 @@ def createLinePlotStrokeRateColoredSpeed(
             "total_strokes": "Stroke Count"
         },
         color_continuous_scale='aggrnyl',
-        # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
-        # width=1600,
-        # height=800
     )
 
     fig.update_xaxes(range=[0, 1000])
