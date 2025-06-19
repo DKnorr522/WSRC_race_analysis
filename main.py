@@ -313,9 +313,10 @@ with col_race:
     wb = fetchExcelFile(file_name)
     race_choices = wb.sheetnames
     race_choice = st.selectbox(
-        "Choose a race",
+        # "Choose a race",
         options=race_choices,
-        index=None
+        index=None,
+        placeholder="Choose a race"
     )
 # with col_breakdown:
 #     breakdown = st.checkbox(
