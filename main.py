@@ -229,7 +229,7 @@ def createLinePlotStrokeRateColoredSpeed(
         df_temp: pd.DataFrame,
         strokes_to_ignore_temp: int = 5):
     if strokes_to_ignore_temp > 0:
-        df_temp = df_temp.loc[df_temp.total_stroke > strokes_to_ignore_temp, :]
+        df_temp = df_temp.loc[df_temp.total_strokes > strokes_to_ignore_temp, :]
     fig = px.scatter(
         df_temp,
         x="distance_gps",
