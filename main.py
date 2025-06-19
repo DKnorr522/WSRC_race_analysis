@@ -20,6 +20,7 @@ def fetchExcelFile(file_name_func: str):
     
     return wb_func
 
+
 def loadDataFrame(wb_func, event_name_func: str) -> pd.DataFrame:
     try:
         df_func: pd.DataFrame = pd.DataFrame(wb_func[event_name_func].values)
@@ -29,6 +30,7 @@ def loadDataFrame(wb_func, event_name_func: str) -> pd.DataFrame:
         print(f"Invalid worksheet name: {err}")
         df_func = None
     return df_func
+
 
 def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func.columns = [
@@ -54,6 +56,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
     )
 
     return df_func
+
 
 def createLinePlotSpeedStrokeRate(
         df_func: pd.DataFrame,
@@ -192,6 +195,7 @@ def createLinePlotSpeedStrokeRate(
     all_figs.update_xaxes(range=[0, 1000])
     return all_figs
 
+
 def createLinePlotSpeedColoredStrokeRate(
         df_func: pd.DataFrame,
         strokes_to_ignore: int = 5):
@@ -218,6 +222,7 @@ def createLinePlotSpeedColoredStrokeRate(
 
     fig.update_xaxes(range=[0, 1000])
     return fig
+
 
 def createLinePlotStrokeRateColoredSpeed(
         df_func: pd.DataFrame,
@@ -248,6 +253,7 @@ def createLinePlotStrokeRateColoredSpeed(
     fig.update_xaxes(range=[0, 1000])
     return fig
 
+
 def createBoxPlotStrokeRateSpeed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
@@ -269,7 +275,8 @@ def createBoxPlotStrokeRateSpeed(
 
     return fig
 
-def plotCourseMap(df_func: pd.DataFrame, size: float=0.1, zoom: int=14) -> None:
+
+def plotCourseMap(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) -> None:
     st.map(
         df_func,
         latitude="gps_lat",
