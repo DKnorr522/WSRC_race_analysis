@@ -212,7 +212,7 @@ def createLinePlotSpeedStrokeRate(
     return all_figs
 
 
-def createLinePlotSpeedColoredStrokeRate(
+def createScatterPlotSpeedColoredStrokeRate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -238,7 +238,7 @@ def createLinePlotSpeedColoredStrokeRate(
     return fig
 
 
-def createLinePlotStrokeRateColoredSpeed(
+def createScatterPlotStrokeRateColoredSpeed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -248,7 +248,13 @@ def createLinePlotStrokeRateColoredSpeed(
         x="distance_gps",
         y="stroke_rate",
         color="speed_gps",
-        hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
+        hover_data=[
+            "elapsed_time",
+            "stroke_rate",
+            "distance_per_stroke_gps",
+            "total_strokes",
+            "split_gps"
+        ],
         labels=labels_dict,
         color_continuous_scale='aggrnyl',
     )
@@ -340,10 +346,10 @@ if race_choice:
     fig1 = createLinePlotSpeedStrokeRate(df.copy(), strokes_to_ignore, breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = createLinePlotSpeedColoredStrokeRate(df.copy(), strokes_to_ignore)
+    fig2 = createScatterPlotSpeedColoredStrokeRate(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig2)
 
-    fig3 = createLinePlotStrokeRateColoredSpeed(df.copy(), strokes_to_ignore)
+    fig3 = createScatterPlotStrokeRateColoredSpeed(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig3)
 
     fig4 = createBoxPlotStrokeRateSpeed(df.copy(), strokes_to_ignore)
