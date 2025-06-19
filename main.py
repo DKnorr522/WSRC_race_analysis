@@ -48,6 +48,9 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
         for col in df_func.columns
     ]
 
+    st.dataframe(df_func)
+    st.write(df_func.dtypes)
+
     numeric_cols = [
         'interval',
         'distance_gps',
