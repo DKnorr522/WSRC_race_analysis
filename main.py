@@ -103,12 +103,12 @@ def createLinePlotSpeedStrokeRate(
         },
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
-    fig2.update_traces({'name': "Stroke Rate"}, yaxis="y2")
+    fig2_func.update_traces({'name': "Stroke Rate"}, yaxis="y2")
 
     all_figs.add_traces(fig1_func.data + fig2_func.data)
-    all_figs.layout.xaxis.title="Distance (m)"
-    all_figs.layout.yaxis.title="Speed (m/s)"
-    all_figs.layout.yaxis2.title="Stroke Rate"
+    all_figs.layout.xaxis.title = "Distance (m)"
+    all_figs.layout.yaxis.title = "Speed (m/s)"
+    all_figs.layout.yaxis2.title = "Stroke Rate"
     # all_figs.layout.title=f"{file_name.split('.')[0]}: WSRC {sheet_name}"
 
     all_figs.for_each_trace(lambda t: t.update(
