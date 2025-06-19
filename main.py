@@ -9,29 +9,29 @@ import os
 import openpyxl
 
 
-def fetchExcelFile(file_name_temp: str):
+def fetchExcelFile(file_name: str):
     try:
-        wb_temp = openpyxl.load_workbook(file_name_temp)
+        wb = openpyxl.load_workbook(file_name)
     except FileNotFoundError as err:
         print(f"File not found: {err}")
-        wb_temp = None
+        wb = None
     except InvalidFileException as err:
         print(f"File must be .xlsx: {err}")
     
-    return wb_temp
+    return wb
 
-def loadDataFrame(wb_temp, event_name: str) -> pd.DataFrame:
+def loadDataFrame(wb, event_name: str) -> pd.DataFrame:
     try:
-        df_temp: pd.DataFrame = pd.DataFrame(wb_temp[event_name].values)
-        df_temp.columns = df_temp.iloc[0]
-        df_temp = df_temp[1:].reset_index(drop=True)
+        df: pd.DataFrame = pd.DataFrame(wb[event_name].values)
+        df.columns = df.iloc[0]
+        df = df[1:].reset_index(drop=True)
     except KeyError as err:
         print(f"Invalid worksheet name: {err}")
-        df_temp = None
-    return df_temp
+        df = None
+    return df
 
-def cleanDataFrame(df_temp: pd.DataFrame) -> pd.DataFrame:
-    df_temp.columns = [
+def cleanDataFrame(df: pd.DataFrame) -> pd.DataFrame:
+    df.columns = [
         col.lower().replace(
             " ", "_"
         ).replace(
@@ -43,22 +43,22 @@ def cleanDataFrame(df_temp: pd.DataFrame) -> pd.DataFrame:
         ).replace(
             "/", "_per_"
         )
-        for col in df_temp.columns
+        for col in df.columns
     ]
 
-    df_temp["elapsed_time_sec"] = df_temp.elapsed_time.apply(
+    df["elapsed_time_sec"] = df.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
     )
-    df_temp["split_sec"] = df_temp.split_gps.apply(
+    df["split_sec"] = df.split_gps.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
     )
 
-    return df_temp
+    return df
 
 def createLinePlotSpeedStrokeRate(
-        df_temp: pd.DataFrame,
-        strokes_to_ignore_temp: int = 5,
-        breakdown_temp: bool = False):# -> go._figure.Figure:
+        df: pd.DataFrame,
+        strokes_to_ignore: int = 5,
+        breakdown: bool = False):# -> go._figure.Figure:
     """
     Adapted secondary y-axis from:
     https://stackoverflow.com/questions/62853539/how-to-plot-on-secondary-y-axis-with-plotly-express
@@ -66,13 +66,13 @@ def createLinePlotSpeedStrokeRate(
     On: 6/14/25
     """
 
-    if strokes_to_ignore_temp > 0:
-        df_temp = df_temp.loc[df_temp.total_strokes > strokes_to_ignore_temp, :]
+    if strokes_to_ignore > 0:
+        df = df.loc[df.total_strokes > strokes_to_ignore, :]
 
     all_figs = make_subplots(specs=[[{"secondary_y": True}]])
 
-    fig1_temp = px.line(
-        df_temp,
+    fig1 = px.line(
+        df,
         x="distance_gps",
         y="speed_gps",
         hover_data=["split_gps", "elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
@@ -86,10 +86,10 @@ def createLinePlotSpeedStrokeRate(
         },
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
-    fig1_temp.update_traces({'name': "Speed"})
+    fig1.update_traces({'name': "Speed"})
 
-    fig2_temp = px.line(
-        df_temp,
+    fig2 = px.line(
+        df,
         x="distance_gps",
         y="stroke_rate",
         hover_data=["elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
@@ -103,9 +103,9 @@ def createLinePlotSpeedStrokeRate(
         },
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
     )
-    fig2_temp.update_traces({'name': "Stroke Rate"}, yaxis="y2")
+    fig2.update_traces({'name': "Stroke Rate"}, yaxis="y2")
 
-    all_figs.add_traces(fig1_temp.data + fig2_temp.data)
+    all_figs.add_traces(fig1.data + fig2.data)
     all_figs.layout.xaxis.title="Distance (m)"
     all_figs.layout.yaxis.title="Speed (m/s)"
     all_figs.layout.yaxis2.title="Stroke Rate"
@@ -116,9 +116,9 @@ def createLinePlotSpeedStrokeRate(
         showlegend=True
     ))
 
-    if breakdown_temp:
-        speed_lim_max = 5 * floor((500 / df_temp.loc[df_temp.total_strokes > 5, :].speed_gps.max())/5)
-        speed_lim_min = 5 * ceil((500 / df_temp.loc[df_temp.total_strokes > 5, :].speed_gps.min())/5)
+    if breakdown:
+        speed_lim_max = 5 * floor((500 / df.loc[df.total_strokes > 5, :].speed_gps.max())/5)
+        speed_lim_min = 5 * ceil((500 / df.loc[df.total_strokes > 5, :].speed_gps.min())/5)
 
         start_speed = speed_lim_max
         while start_speed <= speed_lim_min:
@@ -135,15 +135,13 @@ def createLinePlotSpeedStrokeRate(
             )
             start_speed += 5
 
-        high_strokes_first, *_, high_strokes_last = df_temp.loc[
-            (df_temp.total_strokes >= 6) & (df_temp.total_strokes <= 10), :
+        high_strokes_first, *_, high_strokes_last = df.loc[
+            (df.total_strokes >= 6) & (df.total_strokes <= 10), :
         ].distance_gps.values
 
         all_figs.add_vrect(
             x0=high_strokes_first,
             x1=high_strokes_last,
-            # annotation_text="high strokes",
-            # annotation_position="top left",
             fillcolor="blue",
             opacity=0.1
         )
@@ -165,14 +163,12 @@ def createLinePlotSpeedStrokeRate(
         all_figs.add_vrect(
             x0=750,
             x1=1000,
-            # annotation_text="sprint",
-            # annotation_position="top left",
             fillcolor="maroon",
             opacity=0.1
         )
 
-        speed_max_dist = df_temp.loc[df_temp.speed_gps == df_temp.speed_gps.max(), :].distance_gps.values
-        speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
+        speed_max_dist = df.loc[df.speed_gps == df.speed_gps.max(), :].distance_gps.values
+        speed_max = [df.speed_gps.max()] * len(speed_max_dist)
         all_figs.add_trace(go.Scatter(
             x=speed_max_dist,
             y=speed_max,
@@ -182,8 +178,8 @@ def createLinePlotSpeedStrokeRate(
             textposition="top center"
         ))
 
-        speed_min_dist = df_temp.loc[df_temp.speed_gps == df_temp.speed_gps.min(), :].distance_gps.values
-        speed_min = [df_temp.speed_gps.min()] * len(speed_min_dist)
+        speed_min_dist = df.loc[df.speed_gps == df.speed_gps.min(), :].distance_gps.values
+        speed_min = [df.speed_gps.min()] * len(speed_min_dist)
         all_figs.add_trace(go.Scatter(
             x=speed_min_dist,
             y=speed_min,
@@ -197,12 +193,12 @@ def createLinePlotSpeedStrokeRate(
     return all_figs
 
 def createLinePlotSpeedColoredStrokeRate(
-        df_temp: pd.DataFrame,
-        strokes_to_ignore_temp: int = 5):
-    if strokes_to_ignore_temp > 0:
-        df_temp = df_temp.loc[df_temp.total_strokes > strokes_to_ignore_temp, :]
+        df: pd.DataFrame,
+        strokes_to_ignore: int = 5):
+    if strokes_to_ignore > 0:
+        df = df.loc[df.total_strokes > strokes_to_ignore, :]
     fig = px.scatter(
-        df_temp,
+        df,
         x="distance_gps",
         y="speed_gps",
         color="stroke_rate",
@@ -218,20 +214,18 @@ def createLinePlotSpeedColoredStrokeRate(
         },
         # color_continuous_scale='aggrnyl',
         # title=f"{file_name.split('.')[0]}: WSRC {sheet_name}",
-        # width=1600,
-        # height=800
     )
 
     fig.update_xaxes(range=[0, 1000])
     return fig
 
 def createLinePlotStrokeRateColoredSpeed(
-        df_temp: pd.DataFrame,
-        strokes_to_ignore_temp: int = 5):
-    if strokes_to_ignore_temp > 0:
-        df_temp = df_temp.loc[df_temp.total_strokes > strokes_to_ignore_temp, :]
+        df: pd.DataFrame,
+        strokes_to_ignore: int = 5):
+    if strokes_to_ignore > 0:
+        df = df.loc[df.total_strokes > strokes_to_ignore, :]
     fig = px.scatter(
-        df_temp,
+        df,
         x="distance_gps",
         y="stroke_rate",
         # color="distance_per_stroke_gps",
@@ -255,12 +249,12 @@ def createLinePlotStrokeRateColoredSpeed(
     return fig
 
 def createBoxPlotStrokeRateSpeed(
-        df_temp: pd.DataFrame,
-        strokes_to_ignore_temp: int = 5):
-    if strokes_to_ignore_temp > 0:
-        df_temp = df_temp.loc[df_temp.total_strokes > strokes_to_ignore_temp, :]
+        df: pd.DataFrame,
+        strokes_to_ignore: int = 5):
+    if strokes_to_ignore > 0:
+        df = df.loc[df.total_strokes > strokes_to_ignore, :]
     fig = px.box(
-        df_temp,
+        df,
         x="stroke_rate",
         y="speed_gps",
         labels={
@@ -275,8 +269,8 @@ def createBoxPlotStrokeRateSpeed(
 
     return fig
 
-def createCourseMap(df_temp: pd.DataFrame, size: float = 0.1, zoom: int= 14):
-    df_course: pd.DataFrame = df_temp[["gps_lat", "gps_lon"]]
+def createCourseMap(df: pd.DataFrame, size: float = 0.1, zoom: int= 14):
+    df_course: pd.DataFrame = df[["gps_lat", "gps_lon"]]
     df_course.columns = ["latitude", "longitude"]
 
     course_map = st.map(
@@ -288,8 +282,6 @@ def createCourseMap(df_temp: pd.DataFrame, size: float = 0.1, zoom: int= 14):
 
 
 file_name = "2025 Biernacki.xlsx"
-sheet_name = "Men's 8+"
-# sheet_name = "Men's 4+ (D)"
 
 st.markdown(
     "<h1 style='text-align: center;'> WSRC Race Results </h1>",
@@ -321,25 +313,18 @@ with col_breakdown:
 if race_choice:
     df = loadDataFrame(wb, race_choice)
     df = cleanDataFrame(df)
-    fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore_temp=strokes_to_ignore, breakdown_temp=breakdown)
+    fig1 = createLinePlotSpeedStrokeRate(df, strokes_to_ignore=strokes_to_ignore, breakdown=breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = createLinePlotSpeedColoredStrokeRate(df, strokes_to_ignore_temp=strokes_to_ignore)
+    fig2 = createLinePlotSpeedColoredStrokeRate(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig2)
 
-    fig3 = createLinePlotStrokeRateColoredSpeed(df, strokes_to_ignore_temp=strokes_to_ignore)
+    fig3 = createLinePlotStrokeRateColoredSpeed(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig3)
 
-    fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore_temp=strokes_to_ignore)
+    fig4 = createBoxPlotStrokeRateSpeed(df, strokes_to_ignore=strokes_to_ignore)
     st.plotly_chart(fig4)
 
-    # df_course = df[["gps_lat", "gps_lon"]]
-    # df_course.columns = ["latitude", "longitude"]
-    # st.map(
-    #     df_course,
-    #     size=1,
-    #     zoom=14
-    # )
     course_map = createCourseMap(df, 0.1, 14)
     st.plotly_chart(course_map)
 
