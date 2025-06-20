@@ -373,10 +373,10 @@ if race_choice:
     fig2 = create_scatter_plot_speed_colored_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
     st.plotly_chart(fig2)
 
-    fig3 = create_scatter_plot_stroke_rate_colored_speed(df.copy(), strokes_to_ignore)
+    fig3 = create_scatter_plot_stroke_rate_colored_speed(df.copy(), strokes_to_ignore, breakdown)
     st.plotly_chart(fig3)
 
-    fig4 = create_box_plot_stroke_rate_speed(df.copy(), strokes_to_ignore)
+    fig4 = create_box_plot_stroke_rate_speed(df.copy(), strokes_to_ignore, split_lines)
     st.plotly_chart(fig4)
 
     plot_course_map(df.copy(), 0.1, 14)
