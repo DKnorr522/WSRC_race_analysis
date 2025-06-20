@@ -112,8 +112,7 @@ def add_quarterly_breakdown(
         df_func: pd.DataFrame,
         fig_func,
         num_start_strokes: int = 5,
-        num_high_strokes: int = 5,
-        show_starting_strokes: bool = False):
+        num_high_strokes: int = 5):
     high_strokes_first, *_, high_strokes_last = df_func.loc[
         (df_func.total_strokes > num_start_strokes) & (df_func.total_strokes < num_start_strokes + num_high_strokes), :
     ].distance_gps.values
@@ -146,10 +145,7 @@ def add_quarterly_breakdown(
         opacity=0.1
     )
 
-    df_temp = df_func.loc[df_func.total_strokes > num_start_strokes * (not show_starting_strokes), :]
-    st.dataframe(df_temp)
-    st.write(not show_starting_strokes)
-    st.write(num_start_strokes * (not show_starting_strokes))
+    df_temp = df_func.loc[df_func.total_strokes > num_start_strokes, :]
 
     speed_max_dist = df_temp.loc[df_temp.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
     speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
