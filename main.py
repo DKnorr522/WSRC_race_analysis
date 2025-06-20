@@ -83,6 +83,28 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
 
     return df_func
 
+def speedLimits(df_func: pd.DataFrame) ->  dict[str, float]:
+    limits = {
+        'max': 5 * floor((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.max())/5),
+        'min': 5 * ceil((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.min())/5)
+    }
+    return limits
+
+def add_split_lines(df_func: pd.DataFrame, fig_func):
+    limits = speedLimits(df_func)
+    current_speed = limits['max']
+    while current_speed <= limits['min']:
+        speed_str = f"{current_speed//60}:{current_speed - 60*(current_speed//60):02d}"
+        txt_loc = "bottom left" if current_speed == limits['max'] else "top left"
+        fig_func.add_hline(
+            y=500 / current_speed,
+            line_dash="dash",
+            line_width=1,
+            annotation_text=speed_str,
+            annotation_position=txt_loc
+        )
+        current_speed += 5
+    return fig_func
 
 def createLinePlotSpeedStrokeRate(
         df_func: pd.DataFrame,
@@ -136,23 +158,7 @@ def createLinePlotSpeedStrokeRate(
     ))
 
     if breakdown_func:
-        speed_lim_max = 5 * floor((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.max())/5)
-        speed_lim_min = 5 * ceil((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.min())/5)
-
-        start_speed = speed_lim_max
-        while start_speed <= speed_lim_min:
-            speed_str = f"{start_speed//60}:{start_speed - 60*(start_speed//60):02d}"
-
-            txt_loc = "bottom left" if start_speed == speed_lim_max else "top left"
-
-            all_figs.add_hline(
-                y=500 / start_speed,
-                line_dash="dash",
-                line_width=1,
-                annotation_text=speed_str,
-                annotation_position=txt_loc
-            )
-            start_speed += 5
+        all_figs = add_split_lines(df.copy(), all_figs)
 
         high_strokes_first, *_, high_strokes_last = df_func.loc[
             (df_func.total_strokes >= 6) & (df_func.total_strokes <= 10), :
