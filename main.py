@@ -99,7 +99,7 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
         fig_func.add_hline(
             y=500 / current_speed,
             line_dash="dash",
-            line_width=1,
+            line_width=2,
             annotation_text=speed_str,
             annotation_position=txt_loc
         )
