@@ -263,7 +263,7 @@ def create_scatter_plot_speed_colored_stroke_rate(
     return fig
 
 
-def create_scatter_plot_stroke_rateColoredSpeed(
+def create_scatter_plot_stroke_rate_colored_speed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -365,7 +365,7 @@ if race_choice:
     fig2 = create_scatter_plot_speed_colored_stroke_rate(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig2)
 
-    fig3 = create_scatter_plot_stroke_rateColoredSpeed(df.copy(), strokes_to_ignore)
+    fig3 = create_scatter_plot_stroke_rate_colored_speed(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig3)
 
     fig4 = create_box_plot_stroke_rate_speed(df.copy(), strokes_to_ignore)
