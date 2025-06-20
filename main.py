@@ -257,7 +257,7 @@ def create_scatter_plot_speed_colored_stroke_rate(
     if split_lines_func:
         fig = add_split_lines(df.copy(), fig)
     if breakdown_func:
-        fig = add_quarterly_breakdown(df.copy(), fig)
+        fig = add_quarterly_breakdown(df.copy(), fig, show_fastest_slowest=False)
 
     fig.update_xaxes(range=[0, 1000])
     return fig
