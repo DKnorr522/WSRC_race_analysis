@@ -9,7 +9,7 @@ import os
 import openpyxl
 
 
-def fetchExcelFile(file_name_func: str):
+def fetch_excel_file(file_name_func: str):
     try:
         wb_func = openpyxl.load_workbook(file_name_func)
     except FileNotFoundError as err:
@@ -22,7 +22,7 @@ def fetchExcelFile(file_name_func: str):
     return wb_func
 
 
-def loadDataFrame(wb_func, event_name_func: str) -> pd.DataFrame:
+def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     try:
         df_func: pd.DataFrame = pd.DataFrame(wb_func[event_name_func].values)
         df_func.columns = df_func.iloc[0]
@@ -33,7 +33,7 @@ def loadDataFrame(wb_func, event_name_func: str) -> pd.DataFrame:
     return df_func
 
 
-def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
+def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func.columns = [
         col.lower().replace(
             " ", "_"
@@ -83,7 +83,7 @@ def cleanDataFrame(df_func: pd.DataFrame) -> pd.DataFrame:
 
     return df_func
 
-def speedLimits(df_func: pd.DataFrame) ->  dict[str, float]:
+def speed_limits(df_func: pd.DataFrame) ->  dict[str, float]:
     limits = {
         'max': 5 * floor((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.max())/5),
         'min': 5 * ceil((500 / df_func.loc[df_func.total_strokes > 5, :].speed_gps.min())/5)
@@ -91,7 +91,7 @@ def speedLimits(df_func: pd.DataFrame) ->  dict[str, float]:
     return limits
 
 def add_split_lines(df_func: pd.DataFrame, fig_func):
-    limits = speedLimits(df_func)
+    limits = speed_limits(df_func)
     current_speed = limits['max']
     while current_speed <= limits['min']:
         speed_str = f"{current_speed//60}:{current_speed - 60*(current_speed//60):02d}"
@@ -106,7 +106,7 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
         current_speed += 5
     return fig_func
 
-def createLinePlotSpeedStrokeRate(
+def create_line_plot_speed_stroke_rate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5,
         breakdown_func: bool = False):
@@ -218,7 +218,7 @@ def createLinePlotSpeedStrokeRate(
     return all_figs
 
 
-def createScatterPlotSpeedColoredStrokeRate(
+def create_scatter_plot_speed_colored_stroke_rate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -244,7 +244,7 @@ def createScatterPlotSpeedColoredStrokeRate(
     return fig
 
 
-def createScatterPlotStrokeRateColoredSpeed(
+def create_scatter_plot_stroke_rateColoredSpeed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -269,7 +269,7 @@ def createScatterPlotStrokeRateColoredSpeed(
     return fig
 
 
-def createBoxPlotStrokeRateSpeed(
+def create_box_plot_stroke_rate_speed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
     if strokes_to_ignore_func > 0:
@@ -284,7 +284,7 @@ def createBoxPlotStrokeRateSpeed(
     return fig
 
 
-def plotCourseMap(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) -> None:
+def plot_course_map(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) -> None:
     st.map(
         df_func,
         latitude="gps_lat",
@@ -316,7 +316,7 @@ labels_dict = {
 col_race, col_breakdown = st.columns(2)
 
 with col_race:
-    wb = fetchExcelFile(file_name)
+    wb = fetch_excel_file(file_name)
     race_choices = wb.sheetnames
     race_choice = st.selectbox(
         "",
@@ -337,20 +337,20 @@ if race_choice:
         )
         strokes_to_ignore = 0 if show_start else 5
 
-    df = loadDataFrame(wb, race_choice)
-    df = cleanDataFrame(df)
+    df = load_dataframe(wb, race_choice)
+    df = clean_dataframe(df)
 
-    fig1 = createLinePlotSpeedStrokeRate(df.copy(), strokes_to_ignore, breakdown)
+    fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = createScatterPlotSpeedColoredStrokeRate(df.copy(), strokes_to_ignore)
+    fig2 = create_scatter_plot_speed_colored_stroke_rate(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig2)
 
-    fig3 = createScatterPlotStrokeRateColoredSpeed(df.copy(), strokes_to_ignore)
+    fig3 = create_scatter_plot_stroke_rateColoredSpeed(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig3)
 
-    fig4 = createBoxPlotStrokeRateSpeed(df.copy(), strokes_to_ignore)
+    fig4 = create_box_plot_stroke_rate_speed(df.copy(), strokes_to_ignore)
     st.plotly_chart(fig4)
 
-    plotCourseMap(df.copy(), 0.1, 14)
+    plot_course_map(df.copy(), 0.1, 14)
 
