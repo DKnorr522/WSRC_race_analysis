@@ -146,12 +146,10 @@ def add_quarterly_breakdown(
         opacity=0.1
     )
 
-    speed_max_dist = df_func.loc[
-        (df_func.total_strokes > num_start_strokes * (not show_starting_strokes))
-            & (df_func.speed_gps == df_func.speed_gps.max()),
-        :
-    ].distance_gps.values
-    speed_max = [df_func.speed_gps.max()] * len(speed_max_dist)
+    df_temp = df_func.loc[df_func.total_strokes > num_start_strokes * (not show_starting_strokes), :]
+
+    speed_max_dist = df_temp.loc[df_temp.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
+    speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
     fig_func.add_trace(go.Scatter(
         x=speed_max_dist,
         y=speed_max,
@@ -161,12 +159,8 @@ def add_quarterly_breakdown(
         textposition="top center"
     ))
 
-    speed_min_dist = df_func.loc[
-        (df_func.total_strokes > num_start_strokes * (not show_starting_strokes))
-            & (df_func.speed_gps == df_func.speed_gps.min()),
-        :
-    ].distance_gps.values
-    speed_min = [df_func.speed_gps.min()] * len(speed_min_dist)
+    speed_min_dist = df_temp.loc[df_temp.speed_gps == df_temp.speed_gps.min(), :].distance_gps.values
+    speed_min = [df_temp.speed_gps.min()] * len(speed_min_dist)
     fig_func.add_trace(go.Scatter(
         x=speed_min_dist,
         y=speed_min,
