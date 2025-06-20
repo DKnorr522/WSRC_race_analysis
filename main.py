@@ -263,7 +263,8 @@ def create_scatter_plot_speed_colored_stroke_rate(
 
 def create_scatter_plot_stroke_rate_colored_speed(
         df_func: pd.DataFrame,
-        strokes_to_ignore_func: int = 5):
+        strokes_to_ignore_func: int = 5,
+        breakdown_func: bool = False):
     if strokes_to_ignore_func > 0:
         df_func = df_func.loc[df_func.total_strokes > strokes_to_ignore_func, :]
     fig = px.scatter(
@@ -282,12 +283,16 @@ def create_scatter_plot_stroke_rate_colored_speed(
         color_continuous_scale='aggrnyl',
     )
 
+    if breakdown_func:
+        fig = add_quarterly_breakdown(df_func.copy(), fig)
+
     fig.update_xaxes(range=[0, 1000])
     return fig
 
 def create_box_plot_stroke_rate_speed(
         df_func: pd.DataFrame,
-        strokes_to_ignore_func: int = 5):
+        strokes_to_ignore_func: int = 5,
+        split_lines_func: bool = False):
     if strokes_to_ignore_func > 0:
         df_func = df_func.loc[df_func.total_strokes > strokes_to_ignore_func, :]
     fig = px.box(
@@ -296,6 +301,9 @@ def create_box_plot_stroke_rate_speed(
         y="speed_gps",
         labels=labels_dict,
     )
+
+    if split_lines_func:
+        fig = add_split_lines(df_func.copy(), fig)
 
     return fig
 
