@@ -104,6 +104,7 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
             annotation_position=txt_loc
         )
         current_speed += 5
+    fig_func.update_yaxes(showgrid=False)
     return fig_func
 
 def add_quarterly_breakdown(
