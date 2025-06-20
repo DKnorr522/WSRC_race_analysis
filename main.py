@@ -302,6 +302,9 @@ def create_box_plot_stroke_rate_speed(
         x="stroke_rate",
         y="speed_gps",
         labels=labels_dict,
+        hover_data=[
+            "split_gps"
+        ]
     )
 
     if split_lines_func:
