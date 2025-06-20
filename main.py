@@ -172,6 +172,7 @@ def add_quarterly_breakdown(
 def create_line_plot_speed_stroke_rate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5,
+        split_lines_func: bool = False,
         breakdown_func: bool = False):
     """
     Adapted secondary y-axis from:
@@ -220,8 +221,9 @@ def create_line_plot_speed_stroke_rate(
         showlegend=True
     ))
 
-    if breakdown_func:
+    if split_lines_func:
         all_figs = add_split_lines(df.copy(), all_figs)
+    if breakdown_func:
         all_figs = add_quarterly_breakdown(df.copy(), all_figs)
 
     all_figs.update_xaxes(range=[0, 1000])
@@ -229,7 +231,9 @@ def create_line_plot_speed_stroke_rate(
 
 def create_scatter_plot_speed_colored_stroke_rate(
         df_func: pd.DataFrame,
-        strokes_to_ignore_func: int = 5):
+        strokes_to_ignore_func: int = 5,
+        split_lines_func: bool = False,
+        breakdown_func: bool = False):
     if strokes_to_ignore_func > 0:
         df_func = df_func.loc[df_func.total_strokes > strokes_to_ignore_func, :]
     fig = px.scatter(
@@ -248,6 +252,11 @@ def create_scatter_plot_speed_colored_stroke_rate(
         labels=labels_dict,
         color_continuous_scale='aggrnyl',
     )
+
+    if split_lines_func:
+        fig = add_split_lines(df.copy(), fig)
+    if breakdown_func:
+        fig = add_quarterly_breakdown(df.copy(), fig)
 
     fig.update_xaxes(range=[0, 1000])
     return fig
@@ -333,6 +342,10 @@ with col_race:
 
 if race_choice:
     with col_breakdown:
+        split_lines = st.checkbox(
+            "Split Lines",
+            value=False
+        )
         breakdown = st.checkbox(
             "Breakdown",
             value=False
@@ -346,10 +359,10 @@ if race_choice:
     df = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
-    fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, breakdown)
+    fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
     st.plotly_chart(fig1)
 
-    fig2 = create_scatter_plot_speed_colored_stroke_rate(df.copy(), strokes_to_ignore)
+    fig2 = create_scatter_plot_speed_colored_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
     st.plotly_chart(fig2)
 
     fig3 = create_scatter_plot_stroke_rate_colored_speed(df.copy(), strokes_to_ignore)
