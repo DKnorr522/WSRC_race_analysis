@@ -144,29 +144,30 @@ def add_quarterly_breakdown(
         opacity=0.1
     )
 
-    df_temp = df_func.loc[df_func.total_strokes > num_start_strokes, :]
+    if show_fastest_slowest:
+        df_temp = df_func.loc[df_func.total_strokes > num_start_strokes, :]
 
-    speed_max_dist = df_temp.loc[df_temp.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
-    speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
-    fig_func.add_trace(go.Scatter(
-        x=speed_max_dist,
-        y=speed_max,
-        mode="markers+text",
-        name="Fastest",
-        text="Fastest",
-        textposition="top center"
-    ))
+        speed_max_dist = df_temp.loc[df_temp.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
+        speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
+        fig_func.add_trace(go.Scatter(
+            x=speed_max_dist,
+            y=speed_max,
+            mode="markers+text",
+            name="Fastest",
+            text="Fastest",
+            textposition="top center"
+        ))
 
-    speed_min_dist = df_temp.loc[df_temp.speed_gps == df_temp.speed_gps.min(), :].distance_gps.values
-    speed_min = [df_temp.speed_gps.min()] * len(speed_min_dist)
-    fig_func.add_trace(go.Scatter(
-        x=speed_min_dist,
-        y=speed_min,
-        mode="markers+text",
-        name="Slowest",
-        text="Slowest",
-        textposition="bottom center"
-    ))
+        speed_min_dist = df_temp.loc[df_temp.speed_gps == df_temp.speed_gps.min(), :].distance_gps.values
+        speed_min = [df_temp.speed_gps.min()] * len(speed_min_dist)
+        fig_func.add_trace(go.Scatter(
+            x=speed_min_dist,
+            y=speed_min,
+            mode="markers+text",
+            name="Slowest",
+            text="Slowest",
+            textposition="bottom center"
+        ))
 
     return fig_func
 
