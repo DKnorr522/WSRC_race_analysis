@@ -21,7 +21,6 @@ def fetch_excel_file(file_name_func: str):
     
     return wb_func
 
-
 def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     try:
         df_func: pd.DataFrame = pd.DataFrame(wb_func[event_name_func].values)
@@ -31,7 +30,6 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
         print(f"Invalid worksheet name: {err}")
         df_func = None
     return df_func
-
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func.columns = [
@@ -229,7 +227,6 @@ def create_line_plot_speed_stroke_rate(
     all_figs.update_xaxes(range=[0, 1000])
     return all_figs
 
-
 def create_scatter_plot_speed_colored_stroke_rate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
@@ -255,7 +252,6 @@ def create_scatter_plot_speed_colored_stroke_rate(
     fig.update_xaxes(range=[0, 1000])
     return fig
 
-
 def create_scatter_plot_stroke_rate_colored_speed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
@@ -280,7 +276,6 @@ def create_scatter_plot_stroke_rate_colored_speed(
     fig.update_xaxes(range=[0, 1000])
     return fig
 
-
 def create_box_plot_stroke_rate_speed(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5):
@@ -294,7 +289,6 @@ def create_box_plot_stroke_rate_speed(
     )
 
     return fig
-
 
 def plot_course_map(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) -> None:
     st.map(
