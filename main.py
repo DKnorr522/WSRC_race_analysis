@@ -356,7 +356,7 @@ with col_race:
 if race_choice:
     with col_breakdown:
         split_lines = st.checkbox(
-            "Show split",
+            "Show splits",
             value=False
         )
         breakdown = st.checkbox(
