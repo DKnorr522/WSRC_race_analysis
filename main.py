@@ -356,11 +356,11 @@ with col_race:
 if race_choice:
     with col_breakdown:
         split_lines = st.checkbox(
-            "Split Lines",
+            "Show split",
             value=False
         )
         breakdown = st.checkbox(
-            "Breakdown",
+            "Show 250m breakdown",
             value=False
         )
         show_start = st.checkbox(
