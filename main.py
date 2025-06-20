@@ -110,7 +110,8 @@ def add_quarterly_breakdown(
         df_func: pd.DataFrame,
         fig_func,
         num_start_strokes: int = 5,
-        num_high_strokes: int = 5):
+        num_high_strokes: int = 5,
+        show_fastest_slowest: bool = True):
     high_strokes_first, *_, high_strokes_last = df_func.loc[
         (df_func.total_strokes > num_start_strokes) & (df_func.total_strokes < num_start_strokes + num_high_strokes), :
     ].distance_gps.values
@@ -303,7 +304,7 @@ def create_box_plot_stroke_rate_speed(
     )
 
     if split_lines_func:
-        fig = add_split_lines(df_func.copy(), fig)
+        fig = add_split_lines(df_func.copy(), fig, show_fastest_slowest=False)
 
     return fig
 
