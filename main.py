@@ -147,6 +147,7 @@ def add_quarterly_breakdown(
     )
 
     df_temp = df_func.loc[df_func.total_strokes > num_start_strokes * (not show_starting_strokes), :]
+    st.dataframe(df_temp)
 
     speed_max_dist = df_temp.loc[df_temp.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
     speed_max = [df_temp.speed_gps.max()] * len(speed_max_dist)
