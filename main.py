@@ -101,7 +101,8 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
             line_dash="dash",
             line_width=2,
             annotation_text=speed_str,
-            annotation_position=txt_loc
+            annotation_position=txt_loc,
+            line_color="red"
         )
         current_speed += 5
     fig_func.update_yaxes(showgrid=False)
