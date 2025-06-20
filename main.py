@@ -106,6 +106,63 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
         current_speed += 5
     return fig_func
 
+def add_quarterly_breakdown(df_func: pd.DataFrame, fig_func, num_start_strokes: int = 5, num_high_strokes: int = 5):
+    high_strokes_first, *_, high_strokes_last = df_func.loc[
+        (df_func.total_strokes > num_start_strokes) & (df_func.total_strokes < num_start_strokes + num_high_strokes), :
+    ].distance_gps.values
+
+    fig_func.add_vrect(
+        x0=high_strokes_first,
+        x1=high_strokes_last,
+        fillcolor="blue",
+        opacity=0.1
+    )
+
+    fig_func.add_vrect(
+        x0=250,
+        x1=500,
+        fillcolor="green",
+        opacity=0.1
+    )
+
+    fig_func.add_vrect(
+        x0=500,
+        x1=750,
+        fillcolor="yellow",
+        opacity=0.1
+    )
+
+    fig_func.add_vrect(
+        x0=750,
+        x1=1000,
+        fillcolor="maroon",
+        opacity=0.1
+    )
+
+    speed_max_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
+    speed_max = [df_func.speed_gps.max()] * len(speed_max_dist)
+    fig_func.add_trace(go.Scatter(
+        x=speed_max_dist,
+        y=speed_max,
+        mode="markers+text",
+        name="Fastest",
+        text="Fastest",
+        textposition="top center"
+    ))
+
+    speed_min_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.min(), :].distance_gps.values
+    speed_min = [df_func.speed_gps.min()] * len(speed_min_dist)
+    fig_func.add_trace(go.Scatter(
+        x=speed_min_dist,
+        y=speed_min,
+        mode="markers+text",
+        name="Slowest",
+        text="Slowest",
+        textposition="bottom center"
+    ))
+
+    return fig_func
+
 def create_line_plot_speed_stroke_rate(
         df_func: pd.DataFrame,
         strokes_to_ignore_func: int = 5,
@@ -159,60 +216,7 @@ def create_line_plot_speed_stroke_rate(
 
     if breakdown_func:
         all_figs = add_split_lines(df.copy(), all_figs)
-
-        high_strokes_first, *_, high_strokes_last = df_func.loc[
-            (df_func.total_strokes >= 6) & (df_func.total_strokes <= 10), :
-        ].distance_gps.values
-
-        all_figs.add_vrect(
-            x0=high_strokes_first,
-            x1=high_strokes_last,
-            fillcolor="blue",
-            opacity=0.1
-        )
-
-        all_figs.add_vrect(
-            x0=250,
-            x1=500,
-            fillcolor="green",
-            opacity=0.1
-        )
-
-        all_figs.add_vrect(
-            x0=500,
-            x1=750,
-            fillcolor="yellow",
-            opacity=0.1
-        )
-
-        all_figs.add_vrect(
-            x0=750,
-            x1=1000,
-            fillcolor="maroon",
-            opacity=0.1
-        )
-
-        speed_max_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
-        speed_max = [df_func.speed_gps.max()] * len(speed_max_dist)
-        all_figs.add_trace(go.Scatter(
-            x=speed_max_dist,
-            y=speed_max,
-            mode="markers+text",
-            name="Fastest",
-            text="Fastest",
-            textposition="top center"
-        ))
-
-        speed_min_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.min(), :].distance_gps.values
-        speed_min = [df_func.speed_gps.min()] * len(speed_min_dist)
-        all_figs.add_trace(go.Scatter(
-            x=speed_min_dist,
-            y=speed_min,
-            mode="markers+text",
-            name="Slowest",
-            text="Slowest",
-            textposition="bottom center"
-        ))
+        all_figs = add_quarterly_breakdown(df.copy(), all_figs)
 
     all_figs.update_xaxes(range=[0, 1000])
     return all_figs
