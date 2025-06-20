@@ -106,7 +106,12 @@ def add_split_lines(df_func: pd.DataFrame, fig_func):
         current_speed += 5
     return fig_func
 
-def add_quarterly_breakdown(df_func: pd.DataFrame, fig_func, num_start_strokes: int = 5, num_high_strokes: int = 5):
+def add_quarterly_breakdown(
+        df_func: pd.DataFrame,
+        fig_func,
+        num_start_strokes: int = 5,
+        num_high_strokes: int = 5
+        show_starting_strokes: bool = False):
     high_strokes_first, *_, high_strokes_last = df_func.loc[
         (df_func.total_strokes > num_start_strokes) & (df_func.total_strokes < num_start_strokes + num_high_strokes), :
     ].distance_gps.values
@@ -139,7 +144,11 @@ def add_quarterly_breakdown(df_func: pd.DataFrame, fig_func, num_start_strokes: 
         opacity=0.1
     )
 
-    speed_max_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.max(), :].distance_gps.values
+    speed_max_dist = df_func.loc[
+        (df_func.total_strokes > num_start_strokes * (not show_starting_strokes))
+            & (df_func.speed_gps == df_func.speed_gps.max()),
+        :
+    ].distance_gps.values
     speed_max = [df_func.speed_gps.max()] * len(speed_max_dist)
     fig_func.add_trace(go.Scatter(
         x=speed_max_dist,
@@ -150,7 +159,11 @@ def add_quarterly_breakdown(df_func: pd.DataFrame, fig_func, num_start_strokes: 
         textposition="top center"
     ))
 
-    speed_min_dist = df_func.loc[df_func.speed_gps == df_func.speed_gps.min(), :].distance_gps.values
+    speed_min_dist = df_func.loc[
+        (df_func.total_strokes > num_start_strokes * (not show_starting_strokes))
+            & (df_func.speed_gps == df_func.speed_gps.min()),
+        :
+    ].distance_gps.values
     speed_min = [df_func.speed_gps.min()] * len(speed_min_dist)
     fig_func.add_trace(go.Scatter(
         x=speed_min_dist,
