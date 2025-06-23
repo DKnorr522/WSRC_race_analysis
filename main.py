@@ -198,14 +198,7 @@ def create_line_plot_speed_stroke_rate(
         x="distance_gps",
         y="speed_gps",
         hover_data=["split_gps", "elapsed_time", "stroke_rate", "distance_per_stroke_gps", "total_strokes"],
-        labels={
-            "speed_gps": "Speed (m/s)",
-            "distance_gps": "Distance (m)",
-            "stroke_rate": "Stroke Rate",
-            "elapsed_time": "Time",
-            "distance_per_stroke_gps": "Meters per Stroke",
-            "total_strokes": "Stroke Count"
-        },
+        labels=labels_dict,
     )
     fig1_func.update_traces({'name': "Speed"})
 
