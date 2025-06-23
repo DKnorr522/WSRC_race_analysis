@@ -226,7 +226,8 @@ def create_line_plot_speed_stroke_rate(
     if breakdown_func:
         all_figs = add_quarterly_breakdown(df.copy(), all_figs)
 
-    all_figs.update_xaxes(range=[0, 1000])
+    # all_figs.update_xaxes(range=[0, 1000])
+    all_figs.update_xaxes(range=[0, df_func.distance_gps.max()])
     return all_figs
 
 def create_scatter_plot_speed_colored_stroke_rate(
