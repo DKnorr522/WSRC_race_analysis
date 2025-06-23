@@ -149,6 +149,8 @@ def add_quarterly_breakdown(
         opacity=0.1
     )
 
+    st.write(quarter_distances)
+
     if show_fastest_slowest:
         df_temp = df_func.loc[df_func.total_strokes > num_start_strokes, :]
 
