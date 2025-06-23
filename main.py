@@ -115,6 +115,11 @@ def add_quarterly_breakdown(
     high_strokes_first, *_, high_strokes_last = df_func.loc[
         (df_func.total_strokes > num_start_strokes) & (df_func.total_strokes < num_start_strokes + num_high_strokes), :
     ].distance_gps.values
+    race_distance = df_func.distance_gps.max()
+    quarter_distances = [
+        (q / 4) * race_distance
+        for q in range(5)
+    ]
 
     fig_func.add_vrect(
         x0=high_strokes_first,
@@ -124,22 +129,22 @@ def add_quarterly_breakdown(
     )
 
     fig_func.add_vrect(
-        x0=250,
-        x1=500,
+        x0=quarter_distances[1],
+        x1=quarter_distances[2],
         fillcolor="green",
         opacity=0.1
     )
 
     fig_func.add_vrect(
-        x0=500,
-        x1=750,
+        x0=quarter_distances[2],
+        x1=quarter_distances[3],
         fillcolor="yellow",
         opacity=0.1
     )
 
     fig_func.add_vrect(
-        x0=750,
-        x1=1000,
+        x0=quarter_distances[3],
+        x1=quarter_distances[4],
         fillcolor="maroon",
         opacity=0.1
     )
