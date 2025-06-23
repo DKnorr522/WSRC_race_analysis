@@ -258,7 +258,7 @@ def create_scatter_plot_speed_colored_stroke_rate(
     if breakdown_func:
         fig = add_quarterly_breakdown(df.copy(), fig, show_fastest_slowest=False)
 
-    fig.update_xaxes(range=[0, df_func.distance_gps.max()])
+    fig.update_xaxes(range=[0, df_func.distance_gps.max()*1.05])
 
     return fig
 
@@ -287,7 +287,7 @@ def create_scatter_plot_stroke_rate_colored_speed(
     if breakdown_func:
         fig = add_quarterly_breakdown(df_func.copy(), fig, show_fastest_slowest=False)
 
-    fig.update_xaxes(range=[0, df_func.distance_gps.max()])
+    fig.update_xaxes(range=[0, df_func.distance_gps.max()*1.05])
     return fig
 
 def create_box_plot_stroke_rate_speed(
