@@ -47,30 +47,37 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
         for col in df_func.columns
     ]
 
-    numeric_cols = [
-        'interval',
-        'distance_gps',
-        'distance_imp',
-        'speed_gps',
-        'speed_imp',
-        'stroke_rate',
-        'total_strokes',
-        'distance_per_stroke_gps',
-        'distance_per_stroke_imp',
-        'heart_rate',
-        # 'power',
-        # 'catch',
-        # 'slip',
-        # 'finish',
-        # 'wash',
-        # 'force_avg',
-        # 'work',
-        # 'force_max',
-        # 'max_force_angle',
-        'gps_lat',
-        'gps_lon'
-    ]
-    df_func[numeric_cols] = df[numeric_cols].apply(pd.to_numeric)
+    # numeric_cols = [
+    #     'interval',
+    #     'distance_gps',
+    #     'distance_imp',
+    #     'speed_gps',
+    #     'speed_imp',
+    #     'stroke_rate',
+    #     'total_strokes',
+    #     'distance_per_stroke_gps',
+    #     'distance_per_stroke_imp',
+    #     'heart_rate',
+    #     # 'power',
+    #     # 'catch',
+    #     # 'slip',
+    #     # 'finish',
+    #     # 'wash',
+    #     # 'force_avg',
+    #     # 'work',
+    #     # 'force_max',
+    #     # 'max_force_angle',
+    #     'gps_lat',
+    #     'gps_lon'
+    # ]
+    # df_func[numeric_cols] = df[numeric_cols].apply(pd.to_numeric)
+    for col in df_func.columns:
+        try:
+            df_func[col] = df_func[col].apply(pd.to_numeric)
+        except TypeError as err:
+            print(f"\t{col} could not convert type: {err}")
+        except ValueError as err:
+            print(f"{col} has no data: {err}")
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
