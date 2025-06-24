@@ -370,7 +370,11 @@ if race_choice:
     race_date = race_datetime.strftime("%b %d, %Y")
     race_time = race_datetime.time()
     st.markdown(
-        f"<h2 style='text-align: center;'> {race_date}, {race_time} </h2>",
+        f"<h2 style='text-align: center;'> {race_date} </h2>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f"<h3 style='text-align: center;'> Start time: {race_time} </h3",
         unsafe_allow_html=True
     )
 
