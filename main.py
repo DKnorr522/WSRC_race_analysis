@@ -64,6 +64,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
         except ValueError as err:
             print(f"{col} has no data: {err}")
         except AttributeError as err:
+            print(f"{col = }")
             df_func[col] = df_func[col].apply(pd.to_datetime)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
