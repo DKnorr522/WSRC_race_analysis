@@ -86,6 +86,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     #     'gps_lon'
     # ]
     # df_func[numeric_cols] = df[numeric_cols].apply(pd.to_numeric)
+    st.write(df_func.columns)
     for col in df_func.columns:
         try:
             df_func[col] = df_func[col].apply(pd.to_numeric)
