@@ -57,13 +57,14 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     st.write(df_func.dtypes)
     st.dataframe(df_func)
     for col in df_func.columns:
-        st.write(f"{col = }")
         try:
             df_func[col] = df_func[col].apply(pd.to_numeric)
         except TypeError as err:
             print(f"\t{col} could not convert type: {err}")
         except ValueError as err:
             print(f"{col} has no data: {err}")
+
+    st.write(df_func.dtypes)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
