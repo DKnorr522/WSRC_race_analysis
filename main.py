@@ -36,6 +36,7 @@ def load_dataframe(wb_func, event_name_func: str) -> tuple(pd.DataFrame, str):
     except KeyError as err:
         print(f"Invalid worksheet name: {err}")
         df_func = None
+        race_datetime = None
     return df_func, race_datetime
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
@@ -365,6 +366,7 @@ if race_choice:
     df, race_datetime = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
+    st.write('here')
     st.write(race_datetime)
     st.write(type(race_datetime))
 
