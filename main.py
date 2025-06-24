@@ -38,7 +38,7 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func = df_func[df_func.columns.drop(
-        list(df_func.filter(like=None))
+        list(df_func.filter(like=""))
     )]
     # df_func = df_func[df_func.columns.drop(
     #     list(df_func.filter(regex=None))
