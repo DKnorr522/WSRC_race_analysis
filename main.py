@@ -37,6 +37,9 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     return df_func
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
+    df_func = df_func[df_func.columns.drop(
+        list(df_func.filter(regex=""))
+    )]
     df_func.columns = [
         col.lower().replace(
             " ", "_"
