@@ -381,6 +381,7 @@ if race_choice:
         strokes_to_ignore = 0 if show_start else 5
 
     df = load_dataframe(wb, race_choice)
+    st.write(df.dtypes)
     df = clean_dataframe(df)
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
