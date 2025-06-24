@@ -65,6 +65,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
             print(f"{col} has no data: {err}")
 
     st.write(df_func.dtypes)
+    st.dataframe(df_func)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
