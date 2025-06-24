@@ -366,7 +366,8 @@ if race_choice:
     df, race_datetime = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
-    race_date = race_datetime.date()
+    # race_date = race_datetime.date()
+    race_date = race_datetime.strftime("%M %d, %Y")
     race_time = race_datetime.time()
     with col_race:
         st.write(race_date)
