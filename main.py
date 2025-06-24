@@ -56,8 +56,6 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
 
     df_func = df_func.dropna(axis=0)
 
-    st.write(df_func.dtypes)
-    st.dataframe(df_func)
     for col in df_func.columns:
         try:
             df_func[col] = df_func[col].apply(pd.to_numeric)
@@ -65,9 +63,6 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
             print(f"\t{col} could not convert type: {err}")
         except ValueError as err:
             print(f"{col} has no data: {err}")
-
-    st.write(df_func.dtypes)
-    st.dataframe(df_func)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
@@ -366,11 +361,6 @@ if race_choice:
         strokes_to_ignore = 0 if show_start else 5
 
     df = load_dataframe(wb, race_choice)
-    # st.dataframe(df)
-    # st.write(df.dtypes)
-    # st.write(df.columns)
-    # st.write(df.head())
-    # st.write(df.drop(columns="").head())
     df = clean_dataframe(df)
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
