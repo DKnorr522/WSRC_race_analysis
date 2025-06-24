@@ -40,6 +40,9 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func = df_func[df_func.columns.drop(
         list(df_func.filter(regex=""))
     )]
+    df_func = df_func[df_func.columns.drop(
+        list(df_func.filter(regex=None))
+    )]
     df_func.columns = [
         col.lower().replace(
             " ", "_"
