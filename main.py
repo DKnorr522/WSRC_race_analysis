@@ -40,9 +40,9 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     df_func = df_func[df_func.columns.drop(
         list(df_func.filter(regex=""))
     )]
-    df_func = df_func[df_func.columns.drop(
-        list(df_func.filter(regex=None))
-    )]
+    # df_func = df_func[df_func.columns.drop(
+    #     list(df_func.filter(regex=None))
+    # )]
     df_func.columns = [
         col.lower().replace(
             " ", "_"
@@ -387,11 +387,11 @@ if race_choice:
         strokes_to_ignore = 0 if show_start else 5
 
     df = load_dataframe(wb, race_choice)
-    st.dataframe(df)
-    st.write(df.dtypes)
-    st.write(df.columns)
-    st.write(df.head())
-    st.write(df.drop(columns="").head())
+    # st.dataframe(df)
+    # st.write(df.dtypes)
+    # st.write(df.columns)
+    # st.write(df.head())
+    # st.write(df.drop(columns="").head())
     df = clean_dataframe(df)
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
