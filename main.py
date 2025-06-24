@@ -23,9 +23,14 @@ def fetch_excel_file(file_name_func: str):
 
 def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     try:
-        df_func: pd.DataFrame = pd.DataFrame(wb_func[event_name_func].values)
-        df_func.columns = df_func.iloc[0]
-        df_func = df_func[1:].reset_index(drop=True)
+        header_row: int = 29
+        ws = wb_func[event_name_func]
+        headers = [cell.value for cell in ws[29]]
+        values = [
+            [cell.value for cell in ws[row]]
+            for row in range(header_row + 2, ws.max_row + 1)
+        ]
+        df_func = pd.DataFrame(data=values, columns=headers)
     except KeyError as err:
         print(f"Invalid worksheet name: {err}")
         df_func = None
