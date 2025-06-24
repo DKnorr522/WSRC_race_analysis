@@ -21,7 +21,7 @@ def fetch_excel_file(file_name_func: str):
     
     return wb_func
 
-def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
+def load_dataframe(wb_func, event_name_func: str) -> tuple(pd.DataFrame, str):
     try:
         header_row: int = 29
         ws = wb_func[event_name_func]
@@ -31,10 +31,12 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
             for row in range(header_row + 2, ws.max_row + 1)
         ]
         df_func = pd.DataFrame(data=values, columns=headers)
+
+        race_datetime = ws[4][1].value
     except KeyError as err:
         print(f"Invalid worksheet name: {err}")
         df_func = None
-    return df_func
+    return df_func, race_datetime
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     if None in df_func.columns:
@@ -360,10 +362,9 @@ if race_choice:
         )
         strokes_to_ignore = 0 if show_start else 5
 
-    df = load_dataframe(wb, race_choice)
+    df, race_datetime = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
-    race_datetime = df.iloc[3, 0]
     st.write(race_datetime)
     st.write(type(race_datetime))
 
