@@ -21,7 +21,7 @@ def fetch_excel_file(file_name_func: str):
     
     return wb_func
 
-def load_dataframe(wb_func, event_name_func: str) -> tuple(pd.DataFrame, str):
+def load_dataframe(wb_func, event_name_func: str): # -> tuple(pd.DataFrame, str):
     try:
         header_row: int = 29
         ws = wb_func[event_name_func]
