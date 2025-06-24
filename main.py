@@ -37,9 +37,8 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     return df_func
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
-    # if None in df_func.columns:
-    #     df_func = df_func.drop([None], axis=1)
-    df_func = df_func.dropna(axis=1)
+    if None in df_func.columns:
+        df_func = df_func.drop([None], axis=1)
     df_func.columns = [
         col.lower().replace(
             " ", "_"
@@ -54,6 +53,8 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
         )
         for col in df_func.columns
     ]
+
+    df_func = df_func.dropna(axis=0)
 
     st.write(df_func.dtypes)
     st.dataframe(df_func)
