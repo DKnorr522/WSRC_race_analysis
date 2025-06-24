@@ -363,7 +363,7 @@ if race_choice:
     df = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
-    race_datetime = df.iloc[4, 2]
+    race_datetime = df.iloc[3, 1]
     st.write(race_datetime)
     st.write(type(race_datetime))
 
