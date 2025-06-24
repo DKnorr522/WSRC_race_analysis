@@ -370,8 +370,12 @@ if race_choice:
     race_date = race_datetime.strftime("%b %d, %Y")
     race_time = race_datetime.time()
     with col_race:
-        st.write(race_date)
-        st.write(race_time)
+        # st.write(race_date)
+        # st.write(race_time)
+        st.markdown(
+            f"<h2 style='text-align: center;'> {race_date} </h2>",
+            unsafe_allow_html=True
+        )
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
     st.plotly_chart(fig1)
