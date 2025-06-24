@@ -387,6 +387,7 @@ if race_choice:
         strokes_to_ignore = 0 if show_start else 5
 
     df = load_dataframe(wb, race_choice)
+    st.dataframe(df)
     st.write(df.dtypes)
     st.write(df.columns)
     st.write(df.head())
