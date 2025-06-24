@@ -383,6 +383,8 @@ if race_choice:
     df = load_dataframe(wb, race_choice)
     st.write(df.dtypes)
     st.write(df.columns)
+    st.write(df.head())
+    st.write(df.drop(columns="").head())
     df = clean_dataframe(df)
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
