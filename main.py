@@ -366,9 +366,9 @@ if race_choice:
     df, race_datetime = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
-    st.write('here')
-    st.write(race_datetime)
-    st.write(type(race_datetime))
+    race_date = race_datetime.date()
+    with col_race:
+        st.write(race_date)
 
     fig1 = create_line_plot_speed_stroke_rate(df.copy(), strokes_to_ignore, split_lines, breakdown)
     st.plotly_chart(fig1)
