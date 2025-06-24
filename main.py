@@ -64,9 +64,6 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
             print(f"\t{col} could not convert type: {err}")
         except ValueError as err:
             print(f"{col} has no data: {err}")
-        except AttributeError as err:
-            # st.write(f"{col = }")
-            df_func[col] = df_func[col].apply(pd.to_datetime)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
         lambda x: x.hour*3600 + x.minute*60 + x.second + x.microsecond*1e-6
