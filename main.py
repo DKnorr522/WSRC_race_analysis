@@ -57,6 +57,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     st.write(df_func.dtypes)
     st.dataframe(df_func)
     for col in df_func.columns:
+        st.write(f"{col = }")
         try:
             df_func[col] = df_func[col].apply(pd.to_numeric)
         except TypeError as err:
@@ -64,7 +65,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
         except ValueError as err:
             print(f"{col} has no data: {err}")
         except AttributeError as err:
-            st.write(f"{col = }")
+            # st.write(f"{col = }")
             df_func[col] = df_func[col].apply(pd.to_datetime)
 
     df_func["elapsed_time_sec"] = df_func.elapsed_time.apply(
