@@ -40,8 +40,10 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     # df_func = df_func[df_func.columns.drop(
     #     list(df_func.filter(like=""))
     # )]
+    st.write(df_func.columns)
     if None in df_func.columns:
         df_func = df_func.drop([None], axis=1)
+        st.write(df_func.columns)
     # df_func = df_func[df_func.columns.drop(
     #     list(df_func.filter(regex=None))
     # )]
