@@ -360,6 +360,9 @@ if race_choice:
         )
         strokes_to_ignore = 0 if show_start else 5
 
+    with col_race:
+        st.write('testing')
+
     df = load_dataframe(wb, race_choice)
     df = clean_dataframe(df)
 
