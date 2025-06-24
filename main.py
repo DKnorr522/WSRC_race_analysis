@@ -37,18 +37,8 @@ def load_dataframe(wb_func, event_name_func: str) -> pd.DataFrame:
     return df_func
 
 def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
-    # df_func = df_func[df_func.columns.drop(
-    #     list(df_func.filter(like=""))
-    # )]
-    st.write(df_func.columns)
     if None in df_func.columns:
         df_func = df_func.drop([None], axis=1)
-        st.write("in")
-        st.write(df_func.columns)
-        st.write("out")
-    # df_func = df_func[df_func.columns.drop(
-    #     list(df_func.filter(regex=None))
-    # )]
     df_func.columns = [
         col.lower().replace(
             " ", "_"
@@ -64,31 +54,7 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
         for col in df_func.columns
     ]
 
-    # numeric_cols = [
-    #     'interval',
-    #     'distance_gps',
-    #     'distance_imp',
-    #     'speed_gps',
-    #     'speed_imp',
-    #     'stroke_rate',
-    #     'total_strokes',
-    #     'distance_per_stroke_gps',
-    #     'distance_per_stroke_imp',
-    #     'heart_rate',
-    #     # 'power',
-    #     # 'catch',
-    #     # 'slip',
-    #     # 'finish',
-    #     # 'wash',
-    #     # 'force_avg',
-    #     # 'work',
-    #     # 'force_max',
-    #     # 'max_force_angle',
-    #     'gps_lat',
-    #     'gps_lon'
-    # ]
-    # df_func[numeric_cols] = df[numeric_cols].apply(pd.to_numeric)
-    st.write(df_func.columns)
+    st.write(df_func.dtypes)
     for col in df_func.columns:
         try:
             df_func[col] = df_func[col].apply(pd.to_numeric)
