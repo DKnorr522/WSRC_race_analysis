@@ -367,7 +367,7 @@ if race_choice:
     df = clean_dataframe(df)
 
     # race_date = race_datetime.date()
-    race_date = race_datetime.strftime("%b %d, %Y")
+    race_date = race_datetime.strftime("%B %d, %Y")
     race_time = race_datetime.time()
     st.markdown(
         f"<h2 style='text-align: center;'> {race_date} </h2>",
