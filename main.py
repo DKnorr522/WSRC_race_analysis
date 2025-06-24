@@ -43,7 +43,9 @@ def clean_dataframe(df_func: pd.DataFrame) -> pd.DataFrame:
     st.write(df_func.columns)
     if None in df_func.columns:
         df_func = df_func.drop([None], axis=1)
+        st.write("in")
         st.write(df_func.columns)
+        st.write("out")
     # df_func = df_func[df_func.columns.drop(
     #     list(df_func.filter(regex=None))
     # )]
