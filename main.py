@@ -358,7 +358,7 @@ with col_race:
             placeholder="Choose a race"
         )
 
-if regatta_choice and race_choice:
+if regatta_choice_name and race_choice:
     with col_breakdown:
         split_lines = st.checkbox(
             "Show splits",
