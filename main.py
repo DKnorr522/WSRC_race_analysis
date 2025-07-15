@@ -338,7 +338,7 @@ labels_dict = {
 col_race, col_breakdown = st.columns(2)
 
 with col_race:
-    st.write(os.listdir('.'))
+    st.write(os.listdir('./regattas'))
     # regatta_choice = st.selectbox(
     #     "Choose a regatta",
     #
