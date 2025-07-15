@@ -317,7 +317,6 @@ def plot_course_map(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) ->
     return
 
 
-file_name = "2025 Biernacki.xlsx"
 regatta_choices = [
     file.split('.')[0]
     for file in os.listdir('./regattas')
@@ -352,7 +351,6 @@ with col_race:
     regatta_choice = f"{regatta_choice_name}.xlsx"
 
     if regatta_choice_name:
-        # wb = fetch_excel_file(file_name)
         wb = fetch_excel_file(f"./regattas/{regatta_choice}")
         race_choices = wb.sheetnames
         race_choice = st.selectbox(
