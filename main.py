@@ -318,7 +318,11 @@ def plot_course_map(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) ->
 
 
 file_name = "2025 Biernacki.xlsx"
-regatta_choices = [file.split('.')[0] for file in os.listdir('./regattas')]
+regatta_choices = [
+    file.split('.')[0]
+    for file in os.listdir('./regattas')
+    if len(file) > 5 and file[-5:] == ".xlsx"
+]
 
 st.markdown(
     "<h1 style='text-align: center;'> WSRC Race Results </h1>",
