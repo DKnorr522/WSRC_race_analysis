@@ -318,7 +318,7 @@ def plot_course_map(df_func: pd.DataFrame, size: float = 0.1, zoom: int = 14) ->
 
 
 file_name = "2025 Biernacki.xlsx"
-regatta_choices = os.listdir('./regattas')
+regatta_choices = [split(file, '.')[0] for file in os.listdir('./regattas')]
 
 st.markdown(
     "<h1 style='text-align: center;'> WSRC Race Results </h1>",
@@ -339,12 +339,13 @@ labels_dict = {
 col_race, col_breakdown = st.columns(2)
 
 with col_race:
-    regatta_choice = st.selectbox(
+    regatta_choice_name = st.selectbox(
         "",
         regatta_choices,
         index=None,
         placeholder="Choose a regatta"
     )
+    regatta_choice = f"{regatta_choice_name}.xlsx"
 
     if regatta_choice:
         # wb = fetch_excel_file(file_name)
