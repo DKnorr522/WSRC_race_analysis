@@ -346,15 +346,16 @@ with col_race:
         placeholder="Choose a regatta"
     )
 
-    # wb = fetch_excel_file(file_name)
-    wb = fetch_excel_file(regatta_choice)
-    race_choices = wb.sheetnames
-    race_choice = st.selectbox(
-        "",
-        options=race_choices,
-        index=None,
-        placeholder="Choose a race"
-    )
+    if regatta_choice:
+        # wb = fetch_excel_file(file_name)
+        wb = fetch_excel_file(regatta_choice)
+        race_choices = wb.sheetnames
+        race_choice = st.selectbox(
+            "",
+            options=race_choices,
+            index=None,
+            placeholder="Choose a race"
+        )
 
 if race_choice:
     with col_breakdown:
