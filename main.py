@@ -338,6 +338,12 @@ labels_dict = {
 col_race, col_breakdown = st.columns(2)
 
 with col_race:
+    st.write(os.listdir('.'))
+    # regatta_choice = st.selectbox(
+    #     "Choose a regatta",
+    #
+    # )
+
     wb = fetch_excel_file(file_name)
     race_choices = wb.sheetnames
     race_choice = st.selectbox(
