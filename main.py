@@ -347,7 +347,7 @@ with col_race:
     )
     regatta_choice = f"{regatta_choice_name}.xlsx"
 
-    if regatta_choice:
+    if regatta_choice_name:
         # wb = fetch_excel_file(file_name)
         wb = fetch_excel_file(f"./regattas/{regatta_choice}")
         race_choices = wb.sheetnames
