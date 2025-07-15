@@ -349,7 +349,7 @@ with col_race:
 
     if regatta_choice:
         # wb = fetch_excel_file(file_name)
-        wb = fetch_excel_file(f"./regattas/{regatta_choice}")
+        wb = fetch_excel_file(f"./regattas/{regatta_choice_name}")
         race_choices = wb.sheetnames
         race_choice = st.selectbox(
             "",
