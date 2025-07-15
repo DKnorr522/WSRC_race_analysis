@@ -362,7 +362,7 @@ if regatta_choice_name and race_choice:
     with col_breakdown:
         split_lines = st.checkbox(
             "Show splits",
-            value=False
+            value=True
         )
         breakdown = st.checkbox(
             "Show quarterly breakdown",
